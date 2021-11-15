@@ -1,6 +1,5 @@
-package com.example.todolistbyjetpackcompose.NotDoneList
+package com.example.todolistbyjetpackcompose.ui.notDoneList
 
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
