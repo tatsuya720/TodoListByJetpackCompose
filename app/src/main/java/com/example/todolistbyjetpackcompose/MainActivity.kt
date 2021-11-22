@@ -3,6 +3,7 @@ package com.example.todolistbyjetpackcompose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.*
@@ -11,13 +12,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.LifecycleOwner
+import com.example.todolistbyjetpackcompose.commonViewModel.ListViewModel
 import com.example.todolistbyjetpackcompose.ui.doneList.DoneList
 import com.example.todolistbyjetpackcompose.ui.notDoneList.NotDoneList
 import com.example.todolistbyjetpackcompose.ui.theme.TodoListByJetpackComposeTheme
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-class MainActivity : ComponentActivity() {
+@AndroidEntryPoint
+class MainActivity : ComponentActivity(), LifecycleOwner {
+
+    private val listViewModel: ListViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        lifecycle.addObserver(listViewModel)
         setContent {
             TodoListByJetpackComposeTheme {
                 MainView()

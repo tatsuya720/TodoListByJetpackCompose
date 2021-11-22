@@ -1,19 +1,32 @@
 package com.example.todolistbyjetpackcompose.commonViewModel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.todolistbyjetpackcompose.model.ListItem
+import androidx.lifecycle.*
+import com.example.todolistbyjetpackcompose.model.TodoItem
 import com.example.todolistbyjetpackcompose.repository.ListRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ListViewModel: ViewModel() {
-    private val _list = MutableLiveData<List<ListItem>>()
-    val list: LiveData<List<ListItem>> = _list
+@HiltViewModel
+class ListViewModel @Inject constructor(
+    private val listRepository: ListRepository
+): ViewModel(), DefaultLifecycleObserver {
+//    private val _list = MutableLiveData<List<TodoItem>>()
+//    val todo: LiveData<List<TodoItem>> = listRepository.loadList()
 
-    private val _listRepository = ListRepository()
+    //private val _listRepository = ListRepository()
+
+    override fun onCreate(owner: LifecycleOwner) {
+        super.onCreate(owner)
+
+        viewModelScope.launch {
+            listRepository.loadList()
+        }
+
+    }
 
     fun loadList() {
-        _listRepository.loadList()
+     //   _listRepository.loadList()
     }
 
     fun add() {

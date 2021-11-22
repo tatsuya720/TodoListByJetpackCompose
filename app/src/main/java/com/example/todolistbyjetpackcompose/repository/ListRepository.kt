@@ -1,22 +1,30 @@
 package com.example.todolistbyjetpackcompose.repository
 
-import com.example.todolistbyjetpackcompose.model.ListItem
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.example.todolistbyjetpackcompose.model.TodoItem
+import com.example.todolistbyjetpackcompose.model.TodoState
 
-class ListRepository {
+interface ListRepository {
 
-    fun loadList() {
+    suspend fun loadList()//: List<TodoItem>
 
-    }
+    fun addList(todoItem: TodoItem)
 
-    fun addList() {
+    fun removeListById(id: Int)
 
-    }
+    fun updateStateById(id: Int, state: TodoState)
+//    fun loadList() = dao.all()
 
-    fun removeList() {
+//    suspend fun addList(todoItem: TodoItem) {
+////        dao.insert(todoItem)
+//    }
 
-    }
+//    fun removeListById(id: Int) {
+////        dao.deleteById(id)
+//    }
 
-    fun updateList() {
-
-    }
+//    fun updateStateById(id: Int, state: TodoState) {
+////        dao.updateStateById(id, state.value)
+//    }
 }

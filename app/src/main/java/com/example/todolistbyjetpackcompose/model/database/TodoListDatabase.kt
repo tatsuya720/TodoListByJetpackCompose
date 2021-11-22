@@ -4,12 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.todolistbyjetpackcompose.model.ListItem
+import com.example.todolistbyjetpackcompose.model.TodoItem
 
-@Database(entities = [ListItem::class], version = 1, exportSchema = true)
+@Database(entities = [TodoItem::class], version = 1, exportSchema = true)
 abstract class TodoListDatabase: RoomDatabase() {
 
-    abstract fun listItemDao(): ListItemDao
+    abstract fun listItemDao(): TodoListDao
 
     companion object {
         @Volatile

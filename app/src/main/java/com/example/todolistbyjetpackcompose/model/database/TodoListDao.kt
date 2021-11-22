@@ -4,14 +4,14 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.paging.DataSource
 import androidx.paging.PagingSource
-import com.example.todolistbyjetpackcompose.model.ListItem
+import com.example.todolistbyjetpackcompose.model.TodoItem
+import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface ListItemDao {
+interface TodoListDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(item: ListItem)
+    suspend fun insert(item: TodoItem)
 
     @Query("UPDATE todoList SET state= :state WHERE id =:id")
     fun updateStateById(id: Int, state: Int)
@@ -20,8 +20,9 @@ interface ListItemDao {
     fun deleteById(id: Int)
 
     @Query("SELECT * FROM todoList ORDER BY `id` ASC")
-    fun all(): PagingSource<Int, ListItem>
+    fun all(): Flow<List<TodoItem>>
 
     @Query("DELETE FROM todoList")
     suspend fun deleteAll()
+
 }

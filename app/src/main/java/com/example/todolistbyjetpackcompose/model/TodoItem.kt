@@ -23,7 +23,7 @@ enum class TodoState(val value: Int) {
 @Entity(
     tableName = "todoList"
 )
-data class ListItem(
+data class TodoItem(
     @PrimaryKey var id: Int,
     var title: String,
     var description: String,
