@@ -12,16 +12,16 @@ class ListViewModel @Inject constructor(
     private val listRepository: ListRepository
 ): ViewModel(), DefaultLifecycleObserver {
 //    private val _list = MutableLiveData<List<TodoItem>>()
-//    val todo: LiveData<List<TodoItem>> = listRepository.loadList()
+    val todo: LiveData<List<TodoItem>> = listRepository.loadList().asLiveData()
 
     //private val _listRepository = ListRepository()
 
     override fun onCreate(owner: LifecycleOwner) {
         super.onCreate(owner)
 
-        viewModelScope.launch {
-            listRepository.loadList()
-        }
+//        viewModelScope.launch {
+//            listRepository.loadList()
+//        }
 
     }
 

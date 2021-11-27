@@ -4,10 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.todolistbyjetpackcompose.model.TodoItem
 import com.example.todolistbyjetpackcompose.model.TodoState
+import kotlinx.coroutines.flow.Flow
 
 interface ListRepository {
 
-    suspend fun loadList()//: List<TodoItem>
+    suspend fun loadList(): Flow<List<TodoItem>>
 
     fun addList(todoItem: TodoItem)
 
