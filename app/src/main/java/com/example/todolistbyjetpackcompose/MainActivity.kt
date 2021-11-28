@@ -12,8 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.LifecycleOwner
 import com.example.todolistbyjetpackcompose.commonViewModel.ListViewModel
+import com.example.todolistbyjetpackcompose.model.TodoItem
 import com.example.todolistbyjetpackcompose.ui.doneList.DoneList
 import com.example.todolistbyjetpackcompose.ui.notDoneList.NotDoneList
 import com.example.todolistbyjetpackcompose.ui.theme.TodoListByJetpackComposeTheme
@@ -31,7 +33,7 @@ class MainActivity : ComponentActivity(), LifecycleOwner {
         lifecycle.addObserver(listViewModel)
         setContent {
             TodoListByJetpackComposeTheme {
-                MainView()
+                MainView(listViewModel = listViewModel)
             }
         }
     }
@@ -39,14 +41,14 @@ class MainActivity : ComponentActivity(), LifecycleOwner {
 
 
 @Composable
-fun MainView() {
+fun MainView(listViewModel: ListViewModel) {
     var selectedIndex by remember { mutableStateOf(0) }
-
+    val itemList by listViewModel.todo.observeAsState(listOf())
     Column {
         MenuTab(selectedIndex = selectedIndex) {
             selectedIndex = it
         }
-        ListView(selectedIndex)
+        ListView(selectedIndex, itemList)
     }
 
 
@@ -69,7 +71,7 @@ fun MenuTab(selectedIndex: Int, onClick: (Int) -> Unit) {
 }
 
 @Composable
-fun ListView(selectedIndex: Int) {
+fun ListView(selectedIndex: Int, itemList: List<TodoItem>) {
     if(selectedIndex == 0) {
         NotDoneList()
     } else {
@@ -80,5 +82,5 @@ fun ListView(selectedIndex: Int) {
 @Preview
 @Composable
 fun MenuTabPreview() {
-    MainView()
+    //MainView()
 }

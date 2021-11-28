@@ -6,6 +6,7 @@ import com.example.todolistbyjetpackcompose.model.TodoState
 import com.example.todolistbyjetpackcompose.model.database.TodoListDao
 import com.example.todolistbyjetpackcompose.model.database.TodoListDatabase
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
@@ -17,11 +18,9 @@ class ListRepositoryImpl @Inject constructor(
         //TODO("Not yet implemented")
     }
 
-    override suspend fun loadList(): Flow<List<TodoItem>> {
+    override fun loadList(): Flow<List<TodoItem>> {
         val db = TodoListDatabase.getInstance(context = context)
         return db.listItemDao().all()
-       // TODO("Not yet implemented")
-
     }
 
     override fun removeListById(id: Int) {

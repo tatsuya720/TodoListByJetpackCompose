@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface ListRepository {
 
-    suspend fun loadList(): Flow<List<TodoItem>>
+    fun loadList(): Flow<List<TodoItem>>
 
     fun addList(todoItem: TodoItem)
 
