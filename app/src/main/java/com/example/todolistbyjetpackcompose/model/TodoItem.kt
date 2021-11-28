@@ -24,7 +24,7 @@ enum class TodoState(val value: Int) {
     tableName = "todoList"
 )
 data class TodoItem(
-    @PrimaryKey var id: Int,
+    @PrimaryKey(autoGenerate = true) var id: Int,
     var title: String,
     var description: String,
     var state: TodoState

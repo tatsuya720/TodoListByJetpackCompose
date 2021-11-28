@@ -17,17 +17,9 @@ interface ListRepository {
     fun removeListById(id: Int)
 
     fun updateStateById(id: Int, state: TodoState)
-//    fun loadList() = dao.all()
 
-//    suspend fun addList(todoItem: TodoItem) {
-////        dao.insert(todoItem)
-//    }
+    suspend fun insert(title: String, description: String, state: TodoState)
 
-//    fun removeListById(id: Int) {
-////        dao.deleteById(id)
-//    }
+    suspend fun deleteAll()
 
-//    fun updateStateById(id: Int, state: TodoState) {
-////        dao.updateStateById(id, state.value)
-//    }
 }

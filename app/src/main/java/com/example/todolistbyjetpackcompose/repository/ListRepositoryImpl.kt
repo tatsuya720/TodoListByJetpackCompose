@@ -35,4 +35,15 @@ class ListRepositoryImpl @Inject constructor(
     override fun updateStateById(id: Int, state: TodoState) {
        // TODO("Not yet implemented")
     }
+
+    override suspend fun insert(title: String, description: String, state: TodoState) {
+        val todoItem = TodoItem(0, title = title, description = description, state = state)
+        val db = TodoListDatabase.getInstance(context = context)
+        db.listItemDao().insert(item = todoItem)
+    }
+
+    override suspend fun deleteAll() {
+        val db = TodoListDatabase.getInstance(context = context)
+        db.listItemDao().deleteAll()
+    }
 }
