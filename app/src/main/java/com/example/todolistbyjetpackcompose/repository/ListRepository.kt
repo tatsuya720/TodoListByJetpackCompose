@@ -10,6 +10,8 @@ interface ListRepository {
 
     fun loadList(): Flow<List<TodoItem>>
 
+    fun loadList(todoState: TodoState): Flow<List<TodoItem>>
+
     fun addList(todoItem: TodoItem)
 
     fun removeListById(id: Int)

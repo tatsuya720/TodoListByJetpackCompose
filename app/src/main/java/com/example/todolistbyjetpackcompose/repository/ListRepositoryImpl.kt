@@ -23,6 +23,11 @@ class ListRepositoryImpl @Inject constructor(
         return db.listItemDao().all()
     }
 
+    override fun loadList(todoState: TodoState): Flow<List<TodoItem>> {
+        val db = TodoListDatabase.getInstance(context = context)
+        return db.listItemDao().getList(todoState.value)
+    }
+
     override fun removeListById(id: Int) {
        // TODO("Not yet implemented")
     }

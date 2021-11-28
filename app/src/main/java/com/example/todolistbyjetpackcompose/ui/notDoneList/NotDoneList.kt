@@ -5,9 +5,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.todolistbyjetpackcompose.model.TodoItem
 
 @Composable
-fun NotDoneList() {
+fun NotDoneList(itemList: List<TodoItem>) {
     Scaffold(
         floatingActionButton =  { FloatingActionButton(onClick = { /*TODO*/ }) {
             Icon(imageVector = Icons.Filled.Add, contentDescription = null)
@@ -21,5 +22,5 @@ fun NotDoneList() {
 @Preview
 @Composable
 fun NotDoneListPreview() {
-    NotDoneList()
+    //NotDoneList()
 }

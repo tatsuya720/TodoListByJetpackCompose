@@ -22,6 +22,9 @@ interface TodoListDao {
     @Query("SELECT * FROM todoList ORDER BY `id` ASC")
     fun all(): Flow<List<TodoItem>>
 
+    @Query("SELECT * FROM todoList WHERE state = :state ORDER BY `id` ASC")
+    fun getList(state: Int): Flow<List<TodoItem>>
+
     @Query("DELETE FROM todoList")
     suspend fun deleteAll()
 

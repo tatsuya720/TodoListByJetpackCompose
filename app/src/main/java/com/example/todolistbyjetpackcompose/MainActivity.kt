@@ -16,6 +16,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.LifecycleOwner
 import com.example.todolistbyjetpackcompose.commonViewModel.ListViewModel
 import com.example.todolistbyjetpackcompose.model.TodoItem
+import com.example.todolistbyjetpackcompose.model.TodoState
 import com.example.todolistbyjetpackcompose.ui.doneList.DoneList
 import com.example.todolistbyjetpackcompose.ui.notDoneList.NotDoneList
 import com.example.todolistbyjetpackcompose.ui.theme.TodoListByJetpackComposeTheme
@@ -42,13 +43,13 @@ class MainActivity : ComponentActivity(), LifecycleOwner {
 
 @Composable
 fun MainView(listViewModel: ListViewModel) {
-    var selectedIndex by remember { mutableStateOf(0) }
+    val selectedIndex by listViewModel.listState.observeAsState(TodoState.NotDone)
     val itemList by listViewModel.todo.observeAsState(listOf())
     Column {
-        MenuTab(selectedIndex = selectedIndex) {
-            selectedIndex = it
+        MenuTab(selectedIndex = selectedIndex.value) {
+            listViewModel.stateChange(TodoState.from(it))
         }
-        ListView(selectedIndex, itemList)
+        ListView(selectedIndex.value, itemList)
     }
 
 
@@ -73,9 +74,9 @@ fun MenuTab(selectedIndex: Int, onClick: (Int) -> Unit) {
 @Composable
 fun ListView(selectedIndex: Int, itemList: List<TodoItem>) {
     if(selectedIndex == 0) {
-        NotDoneList()
+        NotDoneList(itemList)
     } else {
-        DoneList()
+        DoneList(itemList)
     }
 }
 
