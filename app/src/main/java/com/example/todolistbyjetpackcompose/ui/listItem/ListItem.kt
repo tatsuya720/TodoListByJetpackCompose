@@ -1,7 +1,6 @@
-package com.example.todolistbyjetpackcompose.ui.notDoneList
+package com.example.todolistbyjetpackcompose.ui.listItem
 
-import android.graphics.drawable.GradientDrawable
-import android.widget.Space
+import android.graphics.fonts.FontFamily
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
@@ -9,28 +8,26 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.ExperimentalComposeApi
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontFamily.Companion.SansSerif
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.todolistbyjetpackcompose.R
+import com.example.todolistbyjetpackcompose.model.TodoState
 import kotlin.math.roundToInt
 
 @ExperimentalMaterialApi
 @Composable
-fun NotDoneListItem(title: String, description: String) {
-
+fun TodoListItem(title: String, description: String, state: TodoState) {
     val swipeableState = rememberSwipeableState(initialValue = 0)
 
     BoxWithConstraints {
@@ -50,39 +47,10 @@ fun NotDoneListItem(title: String, description: String) {
                     orientation = Orientation.Horizontal
                 )
         ) {
-            ButtonArea(buttonWidth = iconBtnSize)
+            ButtonArea(buttonWidth = iconBtnSize, state)
 
             ListItemArea(title = title, description = description, offsetX = swipeableState.offset.value.roundToInt())
         }
-    }
-}
-
-@Composable
-fun ButtonArea(buttonWidth: Dp) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(),
-        horizontalArrangement = Arrangement.End,
-        verticalAlignment = Alignment.CenterVertically
-
-    ){
-      IconButton( onClick = { /*TODO*/ },
-          modifier = Modifier
-              .width(buttonWidth)
-              .fillMaxHeight()
-              .background(Color(red = 0, green = 200, blue = 0))
-      ) {
-          Icon(Icons.Default.Check, contentDescription = "完了にする")
-      }
-      IconButton( onClick = { /*TODO*/ },
-          modifier = Modifier
-              .width(buttonWidth)
-              .fillMaxHeight()
-              .background(Color(red = 200, green = 0, blue = 0))
-      ) {
-          Icon(painter = painterResource(id = R.drawable.delete_icon), contentDescription = "削除")
-      }
     }
 }
 
@@ -92,7 +60,7 @@ fun ListItemArea(title: String, description: String, offsetX: Int) {
     Column(
         modifier = Modifier
             .offset {
-                IntOffset(offsetX,0)
+                IntOffset(offsetX, 0)
             }
             .fillMaxWidth()
             .fillMaxHeight()
@@ -105,7 +73,7 @@ fun ListItemArea(title: String, description: String, offsetX: Int) {
             modifier = Modifier.width(400.dp),
             overflow = TextOverflow.Ellipsis,
             maxLines = 1,
-            fontFamily = FontFamily.SansSerif,
+            fontFamily = SansSerif,
             fontSize = 20.sp,
             color = Color.Black
         )
@@ -114,28 +82,52 @@ fun ListItemArea(title: String, description: String, offsetX: Int) {
             modifier = Modifier.fillMaxWidth(),
             overflow = TextOverflow.Ellipsis,
             maxLines = 2,
-            fontFamily = FontFamily.SansSerif,
+            fontFamily = SansSerif,
             fontSize = 12.sp,
             color = Color.Black
         )
     }
 }
 
-@ExperimentalMaterialApi
 @Composable
-@Preview
-fun PreviewListItem() {
-    NotDoneListItem("ああああああああああああああああああああ", "さんぷるさんぷるさんぷるさんぷるさんぷるさんぷるさんぷるサるサンプルさんp流サンプルさんぷるさんっぷるサンプルサンプルサンプルサンプルさんぷるさんぷるさんぷる")
-}
+fun ButtonArea(buttonWidth: Dp, todoState: TodoState) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(),
+        horizontalArrangement = Arrangement.End,
+        verticalAlignment = Alignment.CenterVertically
 
-@ExperimentalMaterialApi
-@Composable
-@Preview
-fun PreviewButtonArea() {
-    BoxWithConstraints {
-        val screenWidth = with(LocalDensity.current) { maxWidth.toPx() }
-        val swipeSize = (screenWidth / 3)
-        val iconBtnSize = (swipeSize / 2)
-        //ButtonArea(iconBtnSize)
+    ){
+        if(todoState == TodoState.NotDone) {
+            IconButton( onClick = { /*TODO*/ },
+                modifier = Modifier
+                  .width(buttonWidth)
+                  .fillMaxHeight()
+                  .background(Color(red = 0, green = 200, blue = 0))
+            ) {
+                Icon(Icons.Default.Check, contentDescription = "完了にする")
+            }
+        } else {
+            IconButton( onClick = { /*TODO*/ },
+                modifier = Modifier
+                  .width(buttonWidth)
+                  .fillMaxHeight()
+                  .background(Color(red = 0, green = 200, blue = 0))
+            ) {
+                //TODO: Iconを変える
+                Icon(Icons.Default.Delete, contentDescription = "未完了にする")
+            }
+        }
+
+
+        IconButton( onClick = { /*TODO*/ },
+            modifier = Modifier
+              .width(buttonWidth)
+              .fillMaxHeight()
+              .background(Color(red = 200, green = 0, blue = 0))
+        ) {
+            Icon(Icons.Default.Delete, contentDescription = "削除")
+        }
     }
 }

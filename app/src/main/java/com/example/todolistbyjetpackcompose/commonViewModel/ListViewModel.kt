@@ -38,8 +38,10 @@ class ListViewModel @Inject constructor(
      //   _listRepository.loadList()
     }
 
-    fun add() {
-
+    fun add(title: String, description: String, todoState: TodoState) {
+        viewModelScope.launch {
+            listRepository.insert(title = title, description = description, state = todoState)
+        }
     }
 
     fun stateChange(state: TodoState) {
