@@ -27,6 +27,7 @@ class MainActivity : ComponentActivity(), LifecycleOwner {
 
     private val listViewModel: ListViewModel by viewModels()
 
+    @ExperimentalMaterialApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -40,6 +41,7 @@ class MainActivity : ComponentActivity(), LifecycleOwner {
 }
 
 
+@ExperimentalMaterialApi
 @Composable
 fun MainView(listViewModel: ListViewModel) {
     val selectedIndex by listViewModel.listState.observeAsState(TodoState.NotDone)
@@ -70,6 +72,7 @@ fun MenuTab(selectedIndex: Int, onClick: (Int) -> Unit) {
 
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun ListView(selectedIndex: Int, itemList: List<TodoItem>) {
     if(selectedIndex == 0) {
