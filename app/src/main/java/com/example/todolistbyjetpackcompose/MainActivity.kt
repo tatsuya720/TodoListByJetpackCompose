@@ -21,7 +21,6 @@ import com.example.todolistbyjetpackcompose.ui.doneList.DoneList
 import com.example.todolistbyjetpackcompose.ui.notDoneList.NotDoneList
 import com.example.todolistbyjetpackcompose.ui.theme.TodoListByJetpackComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity(), LifecycleOwner {
