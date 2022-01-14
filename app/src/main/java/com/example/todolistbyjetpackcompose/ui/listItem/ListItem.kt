@@ -1,6 +1,5 @@
 package com.example.todolistbyjetpackcompose.ui.listItem
 
-import android.graphics.fonts.FontFamily
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
@@ -14,20 +13,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily.Companion.SansSerif
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.todolistbyjetpackcompose.R
+import com.example.todolistbyjetpackcompose.model.TodoItem
 import com.example.todolistbyjetpackcompose.model.TodoState
 import kotlin.math.roundToInt
 
 @ExperimentalMaterialApi
 @Composable
-fun TodoListItem(title: String, description: String, state: TodoState) {
+fun TodoListItem(todoItem: TodoItem, listOnClick: (todoItem: TodoItem) -> Unit ) {
     val swipeableState = rememberSwipeableState(initialValue = 0)
 
     BoxWithConstraints {
@@ -47,16 +45,18 @@ fun TodoListItem(title: String, description: String, state: TodoState) {
                     orientation = Orientation.Horizontal
                 )
         ) {
-            ButtonArea(buttonWidth = iconBtnSize, state)
+            ButtonArea(buttonWidth = iconBtnSize, todoItem.state)
 
-            ListItemArea(title = title, description = description, offsetX = swipeableState.offset.value.roundToInt())
+            ListItemArea(title = todoItem.title, description = todoItem.description, offsetX = swipeableState.offset.value.roundToInt()) {
+                listOnClick(todoItem)
+            }
         }
     }
 }
 
 @ExperimentalMaterialApi
 @Composable
-fun ListItemArea(title: String, description: String, offsetX: Int) {
+fun ListItemArea(title: String, description: String, offsetX: Int, listOnClick: () -> Unit) {
     Column(
         modifier = Modifier
             .offset {
@@ -66,7 +66,9 @@ fun ListItemArea(title: String, description: String, offsetX: Int) {
             .fillMaxHeight()
             .background(Color(red = 220, green = 220, blue = 220))
             .padding(vertical = 5.dp, horizontal = 10.dp)
-            .clickable { }
+            .clickable {
+                listOnClick()
+            }
 
     ) {
         Text(text = title,

@@ -20,13 +20,13 @@ class ListViewModel @Inject constructor(
     private val mutableListState = MutableStateFlow(TodoState.NotDone)
     val listState = mutableListState.asLiveData()
 
+
     @ExperimentalCoroutinesApi
     val todo: LiveData<List<TodoItem>> = mutableListState.flatMapLatest { todoState ->
         listRepository.loadList(todoState)
     }.asLiveData()
 
     init {
-        initSampleData()
         stateChange(TodoState.NotDone)
     }
 
@@ -46,14 +46,5 @@ class ListViewModel @Inject constructor(
 
     fun stateChange(state: TodoState) {
         mutableListState.value = state
-    }
-
-
-    private fun initSampleData() {
-        viewModelScope.launch {
-            listRepository.deleteAll()
-            listRepository.insert("aaaaaa", "bbbbbbb", TodoState.NotDone)
-            listRepository.insert("bbbbbb", "ccccccc", TodoState.Done)
-        }
     }
 }

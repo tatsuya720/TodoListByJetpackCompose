@@ -13,17 +13,19 @@ import com.example.todolistbyjetpackcompose.ui.listItem.TodoListItem
 
 @ExperimentalMaterialApi
 @Composable
-fun NotDoneList(itemList: List<TodoItem>) {
+fun NotDoneList(itemList: List<TodoItem>, onClickAddBtn: () -> Unit, onClickListItem:(todoItem: TodoItem) -> Unit) {
     Scaffold(
-        floatingActionButton =  { FloatingActionButton(onClick = { /*TODO*/ }) {
-            Icon(imageVector = Icons.Filled.Add, contentDescription = null)
-        }},
+        floatingActionButton = {
+            FloatingActionButton(onClick = { onClickAddBtn() }) {
+                Icon(imageVector = Icons.Filled.Add, contentDescription = null)
+            } },
         floatingActionButtonPosition = FabPosition.End
     ) {
         LazyColumn {
             items(itemList) { item ->
-                //NotDoneListItem(title = item.title, description = item.description)
-                TodoListItem(title = item.title, description = item.description, state = TodoState.NotDone)
+                TodoListItem(item) {
+                    onClickListItem(item)
+                }
             }
         }
     }

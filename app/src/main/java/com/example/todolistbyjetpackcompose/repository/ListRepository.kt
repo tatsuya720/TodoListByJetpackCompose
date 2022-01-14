@@ -20,6 +20,8 @@ interface ListRepository {
 
     suspend fun insert(title: String, description: String, state: TodoState)
 
+    suspend fun findById(id: Long): Flow<TodoItem?>
+
     suspend fun deleteAll()
 
 }

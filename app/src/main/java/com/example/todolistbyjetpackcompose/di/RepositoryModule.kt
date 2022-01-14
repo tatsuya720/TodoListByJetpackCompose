@@ -1,6 +1,8 @@
 package com.example.todolistbyjetpackcompose.di
 
 import android.content.Context
+import com.example.todolistbyjetpackcompose.repository.EditRepository
+import com.example.todolistbyjetpackcompose.repository.EditRepositoryImpl
 import com.example.todolistbyjetpackcompose.repository.ListRepository
 import com.example.todolistbyjetpackcompose.repository.ListRepositoryImpl
 import dagger.Binds
@@ -19,5 +21,12 @@ object RepositoryModule {
         @ApplicationContext context: Context,
     ) : ListRepository {
         return ListRepositoryImpl(context)
+    }
+
+    @Provides
+    fun provideEditRepository(
+        @ApplicationContext context: Context
+    ) : EditRepository {
+        return EditRepositoryImpl(context)
     }
 }

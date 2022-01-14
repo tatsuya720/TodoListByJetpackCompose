@@ -13,11 +13,14 @@ interface TodoListDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(item: TodoItem)
 
+    @Query("UPDATE todoList SET title= :title, description= :description, state= :state WHERE id=:id")
+    fun update(id: Long, title: String, description: String, state: Int)
+
     @Query("UPDATE todoList SET state= :state WHERE id =:id")
-    fun updateStateById(id: Int, state: Int)
+    fun updateStateById(id: Long, state: Int)
 
     @Query("DELETE FROM todoList WHERE id= :id")
-    fun deleteById(id: Int)
+    fun deleteById(id: Long)
 
     @Query("SELECT * FROM todoList ORDER BY `id` ASC")
     fun all(): Flow<List<TodoItem>>
@@ -28,4 +31,6 @@ interface TodoListDao {
     @Query("DELETE FROM todoList")
     suspend fun deleteAll()
 
+    @Query("SELECT * FROM todoList WHERE id = :id")
+    fun findById(id: Long): Flow<List<TodoItem>>
 }

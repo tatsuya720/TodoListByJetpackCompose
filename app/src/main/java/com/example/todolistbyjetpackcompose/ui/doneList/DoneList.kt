@@ -12,16 +12,14 @@ import com.example.todolistbyjetpackcompose.ui.listItem.TodoListItem
 
 @ExperimentalMaterialApi
 @Composable
-fun DoneList(itemList: List<TodoItem>) {
+fun DoneList(itemList: List<TodoItem>, onClickItem: (todoItem:TodoItem) -> Unit) {
     Scaffold {
         LazyColumn {
             items(itemList) { item ->
                 //NotDoneListItem(title = item.title, description = item.description)
-                TodoListItem(
-                    title = item.title,
-                    description = item.description,
-                    state = TodoState.Done
-                )
+                TodoListItem(item) {
+                    onClickItem(item)
+                }
             }
         }
     }
